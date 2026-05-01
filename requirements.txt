@@ -1,0 +1,6 @@
+anthropic
+tavily-python
+python-dotenv
+fastapi
+uvicorn
+line-bot-sdk
