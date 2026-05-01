@@ -18,7 +18,7 @@ configuration = Configuration(access_token=os.getenv("LINE_CHANNEL_ACCESS_TOKEN"
 handler = WebhookHandler(os.getenv("LINE_CHANNEL_SECRET"))
 
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 def health():
     return {"status": "Solar LINE bot is running"}
 
