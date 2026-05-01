@@ -27,10 +27,16 @@ def health():
 async def webhook(request: Request):
     signature = request.headers.get("X-Line-Signature", "")
     body = await request.body()
+    print(f"DEBUG signature: {signature[:20]}...")
+    print(f"DEBUG secret: {os.getenv('LINE_CHANNEL_SECRET')}")
     try:
         handler.handle(body.decode(), signature)
-    except InvalidSignatureError:
+    except InvalidSignatureError as e:
+        print(f"DEBUG InvalidSignatureError: {e}")
         raise HTTPException(status_code=400, detail="Invalid signature")
+    except Exception as e:
+        print(f"DEBUG unexpected error: {type(e).__name__}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
     return "OK"
 
 
